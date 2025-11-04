@@ -30,15 +30,4 @@ document.addEventListener('DOMContentLoaded', () => {
     img.alt = `Piece ${i}`;
     grid.appendChild(img);
   }
-function checkPuzzleComplete() {
-    const images = document.querySelectorAll('#puzzle-grid img');
-    if (images.length === 9) {
-        // Show modal popup
-        document.getElementById('win-modal').classList.remove('hidden');
-    }
-}
-document.getElementById('close-modal').addEventListener('click', function() {
-    document.getElementById('win-modal').classList.add('hidden');
-});
-
 });
