@@ -2,44 +2,53 @@ document.addEventListener('DOMContentLoaded', () => {
   const grid = document.getElementById('puzzle-grid');
   const LS_KEY = 'unlocked_pieces';
   const winSound = document.getElementById('win-sound');
+  const unlockSound = document.getElementById('unlock-sound');
 
-  // ---- AUDIO UNLOCK FIX (to bypass Chrome autoplay restriction) ----
+  // --- 1️⃣ Allow audio playback (Chrome restriction fix)
   document.addEventListener('click', () => {
-    if (winSound) {
-      // Play-pause trick to mark it as user-activated
-      winSound.play().then(() => winSound.pause());
-    }
+    if (winSound) winSound.play().then(() => winSound.pause());
+    if (unlockSound) unlockSound.play().then(() => unlockSound.pause());
   }, { once: true });
 
-  // ---- FUNCTION: Get piece number from URL ----
+  // --- 2️⃣ Get piece number from URL
   function getPieceFromURL() {
     const params = new URLSearchParams(window.location.search);
-    let pieceNum = parseInt(params.get('piece'), 10);
+    const pieceNum = parseInt(params.get('piece'), 10);
     return (!isNaN(pieceNum) && pieceNum >= 1 && pieceNum <= 9) ? pieceNum : null;
   }
 
-  // ---- LOCAL STORAGE HELPERS ----
+  // --- 3️⃣ LocalStorage helpers
   function getUnlockedPieces() {
-    let arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
+    const arr = JSON.parse(localStorage.getItem(LS_KEY) || '[]');
     return Array.isArray(arr) ? arr : [];
   }
 
   function unlockPiece(p) {
-    let arr = getUnlockedPieces();
+    const arr = getUnlockedPieces();
     if (!arr.includes(p)) {
       arr.push(p);
       localStorage.setItem(LS_KEY, JSON.stringify(arr));
+
+      // 🔊 Play unlock sound
+      if (unlockSound) {
+        unlockSound.currentTime = 0;
+        unlockSound.play().catch(() => {});
+      }
+
+      // ✨ Flash effect on grid
+      grid.classList.add('flash');
+      setTimeout(() => grid.classList.remove('flash'), 500);
     }
   }
 
-  // ---- UNLOCK PIECE FROM URL ----
-  let scannedPiece = getPieceFromURL();
+  // --- 4️⃣ Unlock piece from URL (if any)
+  const scannedPiece = getPieceFromURL();
   if (scannedPiece) unlockPiece(scannedPiece);
 
-  // ---- BUILD THE GRID ----
-  let unlocked = getUnlockedPieces();
+  // --- 5️⃣ Render puzzle grid
+  const unlocked = getUnlockedPieces();
   for (let i = 1; i <= 9; i++) {
-    let img = document.createElement('img');
+    const img = document.createElement('img');
     img.src = unlocked.includes(i)
       ? `images/part${i}.jpg`
       : 'images/placeholder.png';
@@ -47,29 +56,29 @@ document.addEventListener('DOMContentLoaded', () => {
     grid.appendChild(img);
   }
 
-  // ---- CHECK COMPLETION ----
+  // --- 6️⃣ Check puzzle completion
   function checkPuzzleComplete() {
-    let unlocked = getUnlockedPieces();
+    const unlocked = getUnlockedPieces();
     const isComplete = unlocked.length === 9 && [1,2,3,4,5,6,7,8,9].every(n => unlocked.includes(n));
 
     if (isComplete) {
       document.getElementById('win-modal').classList.remove('hidden');
 
-      // ---- Play winning sound ----
+      // 🎵 Play win sound
       if (winSound) {
         winSound.currentTime = 0;
-        winSound.play().catch(err => console.log('Audio blocked:', err));
+        winSound.play().catch(err => console.warn('Audio blocked:', err));
       }
 
-      // ---- Trigger confetti effect ----
+      // 🎉 Confetti animation
       triggerConfetti();
     }
   }
 
-  // ---- CONFETTI EFFECT ----
+  // --- 7️⃣ Confetti animation
   function triggerConfetti() {
-    const duration = 2 * 1000; // 2 seconds
-    const animationEnd = Date.now() + duration;
+    const duration = 3 * 1000;
+    const end = Date.now() + duration;
     const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 9999 };
 
     function randomInRange(min, max) {
@@ -77,33 +86,26 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     (function frame() {
-      // Only run if confetti lib is available
       if (window.confetti) {
         window.confetti(Object.assign({}, defaults, {
           particleCount: 50,
-          origin: {
-            x: randomInRange(0.2, 0.8),
-            y: Math.random() - 0.2
-          }
+          origin: { x: randomInRange(0.1, 0.9), y: Math.random() - 0.2 }
         }));
       }
-      if (Date.now() < animationEnd) {
-        requestAnimationFrame(frame);
-      }
+      if (Date.now() < end) requestAnimationFrame(frame);
     })();
   }
 
-  // ---- RESET PUZZLE ----
-  document.getElementById('reset-btn').addEventListener('click', function () {
+  // --- 8️⃣ Reset & close handlers
+  document.getElementById('reset-btn').addEventListener('click', () => {
     localStorage.removeItem(LS_KEY);
     location.reload();
   });
 
-  // ---- CLOSE MODAL ----
-  document.getElementById('close-modal').addEventListener('click', function () {
+  document.getElementById('close-modal').addEventListener('click', () => {
     document.getElementById('win-modal').classList.add('hidden');
   });
 
-  // ---- INITIAL CHECK ----
+  // --- 9️⃣ Initial completion check
   checkPuzzleComplete();
 });
