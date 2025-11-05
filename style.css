@@ -109,9 +109,16 @@ button:hover, #reset-btn:hover {
 }
 
 #win-modal h2 {
-  margin: 0 0 14px 0;
-  font-size: 2.3em;
-  color: #38b000;
+  background: linear-gradient(90deg, #38b000, #ffd700, #38b000);
+  background-size: 200% 200%;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: shimmer 2s linear infinite;
+  font-size: 2.5em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  
   letter-spacing: 0.07em;
 }
 
@@ -149,7 +156,10 @@ button:hover, #reset-btn:hover {
   80% { transform: scale(1.1); }
   100% { transform: scale(1); }
 }
-
+@keyframes shimmer {
+  0% { background-position: 0 50%; }
+  100% { background-position: 100% 50%; }
+}
 /* ------------------------------
    Responsive Adjustments
 ------------------------------ */

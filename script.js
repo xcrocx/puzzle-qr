@@ -40,11 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Check if puzzle is complete ---
   function checkPuzzleComplete() {
-    const unlockedPieces = getUnlockedPieces();
-    if (unlockedPieces.length === 9) {
-      document.getElementById('win-modal').classList.remove('hidden');
-    }
+  let unlocked = getUnlockedPieces();
+  if (unlocked.length === 9 && [1,2,3,4,5,6,7,8,9].every(n => unlocked.includes(n))) {
+    document.getElementById('win-modal').classList.remove('hidden');
+    let sound = document.getElementById('win-sound');
+    if (sound) sound.play();
+    // Optional: trigger confetti/extra effects here
   }
+}
+
 
   // --- Reset puzzle ---
   document.getElementById('reset-btn').addEventListener('click', function () {
