@@ -3,12 +3,20 @@ document.addEventListener('DOMContentLoaded', () => {
   const LS_KEY = 'unlocked_pieces';
   const winSound = document.getElementById('win-sound');
   const unlockSound = document.getElementById('unlock-sound');
+  const soundOverlay = document.getElementById('sound-unlock');
 
-  // --- 1️⃣ Allow audio playback (Chrome restriction fix)
-  document.addEventListener('click', () => {
-    if (winSound) winSound.play().then(() => winSound.pause());
-    if (unlockSound) unlockSound.play().then(() => unlockSound.pause());
-  }, { once: true });
+  // --- 🔊 Unlock sound playback (handles Chrome autoplay block)
+  if (soundOverlay) {
+    soundOverlay.addEventListener('click', () => {
+      // Play once to "unlock" audio
+      Promise.all([
+        winSound.play().then(() => winSound.pause()),
+        unlockSound.play().then(() => unlockSound.pause())
+      ]).finally(() => {
+        soundOverlay.style.display = 'none'; // hide overlay
+      });
+    });
+  }
 
   // --- 2️⃣ Get piece number from URL
   function getPieceFromURL() {

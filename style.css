@@ -141,6 +141,38 @@ button:hover, #reset-btn:hover {
 #close-modal:hover {
   background: #0fa;
 }
+/* ------------------------------
+   Sound Unlock Overlay
+------------------------------ */
+#sound-unlock {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.sound-unlock-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2em 3em;
+  text-align: center;
+  box-shadow: 0 0 40px #0008;
+  animation: modalPopIn 0.45s ease-out;
+}
+
+.sound-unlock-box h2 {
+  margin: 0 0 0.5em 0;
+  font-size: 1.8em;
+  color: #38b000;
+}
+
+.sound-unlock-box p {
+  color: #444;
+  font-size: 1.1em;
+}
 
 /* ------------------------------
    Animations
