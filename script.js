@@ -37,6 +37,10 @@ function checkPuzzleComplete() {
         document.getElementById('win-modal').classList.remove('hidden');
     }
 }
+document.getElementById('reset-btn').addEventListener('click', function() {
+  localStorage.removeItem('unlocked_pieces'); // Clears all unlocked pieces
+  location.reload(); // Refreshes page to update the grid
+});
 document.getElementById('close-modal').addEventListener('click', function() {
     document.getElementById('win-modal').classList.add('hidden');
 });
