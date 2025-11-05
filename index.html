@@ -2,21 +2,39 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Treasure Hunt </title>
+  <title>Treasure Hunt</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<div id="win-modal" class="hidden">
-  <div class="win-modal-content">
-    <h2>Congratulations!</h2>
-    <p>Your team has won!</p>
-    <button id="close-modal">OK</button>
-  </div>
-</div>
 <body>
-  <h1>Image Puzzle QR</h1>
-  <div id="puzzle-grid">
-    <!-- Images will be placed here by JS -->
-  </div>
+  <header>
+    <h1>Treasure Hunt Puzzle</h1>
+  </header>
+
+  <main>
+    <section class="about-bus">
+      <h2>About this Image</h2>
+      <p>
+        This puzzle features "the bus" that was painted in celebration of our college's annual technical fest, <a href="https://en.wikipedia.org/wiki/Abeyaantrix" target="_blank" rel="noopener">Abeyaantrix</a>.
+        <br>This photo captures the bus in its prime, beautifully decorated by students as a vibrant symbol of our campus spirit and festivity.
+      </p>
+    </section>
+
+    <section>
+      <button id="reset-btn">🔄 Reset Puzzle</button>
+      <div id="puzzle-grid">
+        <!-- Images will be placed here by JS -->
+      </div>
+    </section>
+
+    <div id="win-modal" class="hidden">
+      <div class="win-modal-content">
+        <h2>Congratulations!</h2>
+        <p>Your team has won!</p>
+        <button id="close-modal">OK</button>
+      </div>
+    </div>
+  </main>
+
   <script src="script.js"></script>
 </body>
 </html>

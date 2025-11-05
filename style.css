@@ -1,17 +1,46 @@
+/* ------------------------------
+   Base Page Styling
+------------------------------ */
 body {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   text-align: center;
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(246,211,101,0.8), rgba(253,160,133,0.8)),
+    url('images/your-background.jpg') center center/cover fixed no-repeat;
 }
 
+/* ------------------------------
+   Heading Styles
+------------------------------ */
+h1 {
+  font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  color: #3a4867;
+  letter-spacing: 0.05em;
+  margin-top: 38px;
+  text-shadow: 0 2px 12px #fff7;
+}
+
+/* ------------------------------
+   Puzzle Grid (16:9)
+------------------------------ */
 #puzzle-grid {
-  width: 1280px;
-  height: 720px;
+  display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-  gap: 2px; /* if you want no visible seams */
+  gap: 2px;
+  width: 90vw;               /* responsive width */
+  aspect-ratio: 16 / 9;      /* maintains 16:9 ratio */
+  max-width: 1280px;         /* prevent oversizing */
+  margin: 44px auto 2em;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60,60,70,0.16);
+  background: rgba(255,255,255,0.13);
+  backdrop-filter: blur(5px);
 }
 
-
+/* Each puzzle image */
 #puzzle-grid img {
   width: 100%;
   height: 100%;
@@ -27,23 +56,42 @@ body {
   box-shadow: 0 6px 24px rgba(70,130,180,0.25);
 }
 
-/* ----- Add below this ----- */
+/* ------------------------------
+   Buttons
+------------------------------ */
+button, #reset-btn {
+  background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  font-size: 1.1em;
+  padding: 0.8em 1.8em;
+  cursor: pointer;
+  margin: 12px 0 24px 0;
+  box-shadow: 0 2px 16px #54ffd988;
+  transition: background 0.18s, box-shadow 0.18s;
+}
+
+button:hover, #reset-btn:hover {
+  background: #0ea377;
+  box-shadow: 0 6px 26px #43e97b99;
+}
+
+/* ------------------------------
+   Win Modal
+------------------------------ */
 #win-modal {
   position: fixed;
-  left: 0; top: 0;
-  width: 100vw; height: 100vh;
+  left: 0; 
+  top: 0;
+  width: 100vw; 
+  height: 100vh;
   background: rgba(0,0,0,0.6);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   animation: modalFadeIn 0.5s;
-}
-@media screen and (max-width: 1300px) {
-  #puzzle-grid {
-    width: 98vw;
-    height: calc(98vw * 0.75); /* Preserves aspect ratio (960/1280 = 0.75) */
-  }
 }
 
 #win-modal.hidden {
@@ -83,16 +131,38 @@ body {
   cursor: pointer;
   transition: background 0.2s;
 }
+
 #close-modal:hover {
   background: #0fa;
 }
 
+/* ------------------------------
+   Animations
+------------------------------ */
 @keyframes modalFadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
+
 @keyframes modalPopIn {
   0% { transform: scale(0.5); }
-  80% { transform: scale(1.1);}
-  100% { transform: scale(1);}
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* ------------------------------
+   Responsive Adjustments
+------------------------------ */
+@media screen and (max-width: 800px) {
+  #puzzle-grid {
+    width: 95vw;
+  }
+
+  #win-modal h2 {
+    font-size: 1.8em;
+  }
+
+  #win-modal p {
+    font-size: 1em;
+  }
 }
