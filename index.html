@@ -4,19 +4,23 @@
   <meta charset="UTF-8">
   <title>Treasure Hunt</title>
   <link rel="stylesheet" href="style.css">
+  <!-- Confetti library (only once) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
+
 <body>
   <header>
     <h1>Treasure Hunt Puzzle</h1>
   </header>
 
-
   <main>
     <section class="about-bus">
       <h2>About this Image</h2>
       <p>
-        This puzzle features "the bus" that was painted in celebration of our college's annual technical fest, <a href="https://en.wikipedia.org/wiki/Abeyaantrix" target="_blank" rel="noopener">Abeyaantrix</a>.
-        <br>This photo captures the bus in its prime, beautifully decorated by students as a vibrant symbol of our campus spirit and festivity.
+        This puzzle features "the bus" that was painted in celebration of our college's annual technical fest,
+        <a href="https://en.wikipedia.org/wiki/Abeyaantrix" target="_blank" rel="noopener">Abeyaantrix</a>.
+        <br>This photo captures the bus in its prime, beautifully decorated by students as a vibrant symbol
+        of our campus spirit and festivity.
       </p>
     </section>
 
@@ -27,6 +31,7 @@
       </div>
     </section>
 
+    <!-- Win Modal -->
     <div id="win-modal" class="hidden">
       <div class="win-modal-content">
         <h2>Congratulations!</h2>
@@ -36,8 +41,10 @@
     </div>
   </main>
 
-  <script src="script.js"></script>
+  <!-- Audio (kept near end of body for better load order) -->
   <audio id="win-sound" src="sounds/win.mp3" preload="auto"></audio>
 
+  <!-- Your main JS script -->
+  <script src="script.js"></script>
 </body>
 </html>
